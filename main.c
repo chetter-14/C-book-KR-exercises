@@ -1,24 +1,13 @@
 #include <stdio.h>
 
-// Fahrenheit-Celsius talbe
+// Fahrenheit-Celsius table
 void fahrCelsTempConversion()
 {
 	printf("Fahrenheit to Celsius Conversion Table\n");
 	printf("--------------------------------------\n");
-	float fahr, cels;
-	int lower, upper, step;
 	
-	lower = 0;
-	upper = 300;
-	step = 20;
-	
-	fahr = lower;
-	while (fahr <= upper)
-	{
-		cels = (5.0 / 9) * (fahr - 32);
-		printf("%3.0f %6.1f\n", fahr, cels);
-		fahr += step;
-	}
+	for (int fahr = 300; fahr >= 0; fahr -= 20)
+		printf("%3d %6.1f\n", fahr, (5.0 / 9) * (fahr - 32));
 }
 
 // Celsius-Fahrenheit table
