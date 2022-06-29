@@ -1,12 +1,16 @@
 #include <stdio.h>
 
+#define LOWER 0
+#define UPPER 0
+#define STEP 0
+
 // Fahrenheit-Celsius table
 void fahrCelsTempConversion()
 {
 	printf("Fahrenheit to Celsius Conversion Table\n");
 	printf("--------------------------------------\n");
 	
-	for (int fahr = 300; fahr >= 0; fahr -= 20)
+	for (int fahr = UPPER; fahr >= LOWER; fahr -= STEP)
 		printf("%3d %6.1f\n", fahr, (5.0 / 9) * (fahr - 32));
 }
 
