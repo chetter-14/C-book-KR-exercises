@@ -4,80 +4,6 @@
 #define IN 1		/* inside a word */
 #define OUT 0		/* outside a word */
 
-void countLinesCharsWords()
-{
-	int c, nl, nw, nc, state;
-	
-	state = OUT;
-	nl = nw = nc = 0;
-	while ((c = getchar()) != EOF)
-	{
-		nc++;
-		if (c == '\n')
-			nl++;
-		if (c == ' ' || c == '\n' || c == '\t')
-			state = OUT;
-		else if (state == OUT)
-		{
-			state = IN;
-			nw++;
-		}
-	}
-	printf("Lines - %d, chars - %d, words - %d", nl, nc, nw);
-}
-
-void countBlanksTabsNewlines()
-{
-	int c;
-	int nl, bl, tab;
-	
-	nl = 0, bl = 0, tab = 0;
-	while ((c = getchar()) != EOF)
-	{
-		if (c == '\n')
-		{
-			nl++;
-			continue;
-		}
-		if (c == '\t')
-		{
-			tab++;
-			continue;
-		}
-		if (c == ' ')
-		{
-			bl++;
-			continue;
-		}
-	}
-	printf("Blanks - %d, tabs - %d, newlines - %d\n", bl, tab, nl);	
-	
-}
-
-void replaceMultBlanksBySingle()
-{
-	int c;
-	
-	bool isLastBlank = false;
-	while ((c = getchar()) != EOF)
-	{
-		if (c != ' ')
-		{
-			isLastBlank = false;
-			putchar(c);
-		}
-		else 
-		{
-			if (!isLastBlank)
-			{
-				putchar(c);
-				isLastBlank = true;
-			}
-		}
-		
-	}
-}
-
 void outputOneWordPerLine()
 {
 	int c, state;
@@ -99,9 +25,37 @@ void outputOneWordPerLine()
 	}
 }
 
+void print_words_length_histogram() 
+{
+	int c, state;
+	int wordLen = 0;
+	
+	state = OUT;
+	while ((c = getchar()) != EOF)
+	{
+		if (c == ' ' || c == '\t' || c == '\n')
+		{
+			if (state == IN)
+			{
+				printf(" : ");
+				for ( ; wordLen != 0; wordLen--)
+					putchar('x');
+			}
+			putchar('\n');
+			state = OUT;
+		}
+		else 
+		{
+			state = IN;
+			wordLen++;
+			putchar(c);
+		}
+	}
+}
+
 int main()
 {
-	outputOneWordPerLine();
+	print_words_length_histogram();
 	return 0;
 }
 
