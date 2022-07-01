@@ -5,6 +5,8 @@
 int get_line(char line[], int maxline);
 void copy(char to[], char from[]);
 
+void reverse(char s[]);
+
 int main()
 {
 	int len;
@@ -12,10 +14,8 @@ int main()
 	
 	while ((len = get_line(line, MAXLINE)) > 0)
 	{
-		if (len > LOWER_LEN_BOUND)
-			printf("%s\n", line);
-		else 
-			printf("Won't be printed!\n");
+		reverse(line);
+		printf("%s\n", line);
 	}
 		
 	return 0;
@@ -30,6 +30,21 @@ int get_line(char s[], int lim)
 		s[i] = c;
 	s[i] = '\0';
 	return i;
+}
+
+void reverse(char s[])
+{
+	int len;
+	for (len = 0; s[len] != '\0'; len++)
+		;
+	
+	char temp;
+	for (int lower = 0, upper = (len-1); lower < upper; lower++, upper--)
+	{
+		temp = s[lower];
+		s[lower] = s[upper];
+		s[upper] = temp;
+	}
 }
 
 /* copy 'from' into 'to' */
