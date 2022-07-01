@@ -1,81 +1,51 @@
 #include <stdio.h>
-#include <stdbool.h>
+#define MAXLINE 1000
 
-#define IN 1		/* inside a word */
-#define OUT 0		/* outside a word */
-#define CHARS_AMOUNT 128	/* according to the ASCII table */
-
-void outputOneWordPerLine()
-{
-	int c, state;
-	
-	state = OUT;
-	while ((c = getchar()) != EOF)
-	{
-		if (c == ' ' || c == '\t')
-		{
-			if (state == IN)
-				putchar('\n');
-			state = OUT;
-		}
-		else 
-		{
-			state = IN;
-			putchar(c);
-		}
-	}
-}
-
-void print_words_length_histogram() 
-{
-	int c, state;
-	int wordLen = 0;
-	
-	state = OUT;
-	while ((c = getchar()) != EOF)
-	{
-		if (c == ' ' || c == '\t' || c == '\n')
-		{
-			if (state == IN)
-			{
-				printf(" : ");
-				for ( ; wordLen != 0; wordLen--)
-					putchar('x');
-			}
-			putchar('\n');
-			state = OUT;
-		}
-		else 
-		{
-			state = IN;
-			wordLen++;
-			putchar(c);
-		}
-	}
-}
-
-void count_chars_frequencies()
-{
-	int charsFrequencies[CHARS_AMOUNT];
-	for (int i = 0; i < CHARS_AMOUNT; i++)
-		charsFrequencies[i] = 0;
-	
-	int c;
-	while ((c = getchar()) != EOF)
-		charsFrequencies[c]++;
-	
-	for (int i = 0; i < CHARS_AMOUNT; i++)
-	{
-		printf("%c (char) : ", (char)i);
-		for (int j = 0; j < charsFrequencies[i]; j++)
-			putchar('x');
-		putchar('\n');
-	}
-}
+int get_line(char line[], int maxline);
+void copy(char to[], char from[]);
 
 int main()
 {
-	count_chars_frequencies();
+	int len;
+	int max;
+	char line[MAXLINE];
+	char longest[MAXLINE];
+	
+	max = 0;
+	while ((len = get_line(line, MAXLINE)) > 0)
+		if (len > max) 
+		{
+			max = len;
+			copy(longest, line);
+		}
+	
+	if (max > 0)
+		printf("%s", longest);
+	
 	return 0;
+}
+
+/* read a line into s, return the length */
+int get_line(char s[], int lim)
+{
+	int c, i;
+	
+	for (i = 0; i < lim-1 && (c = getchar()) != EOF && c != '\n'; i++)
+		s[i] = c;
+	if (c == '\n')
+	{
+		s[i] = c;
+		i++;
+	}
+	s[i] = '\0';
+	return i;
+}
+
+/* copy 'from' into 'to' */
+void copy(char to[], char from[])
+{
+	int i = 0;
+	while ((to[i] = from[i]) != '\0')
+		i++;
 }
 
