@@ -3,6 +3,7 @@
 
 #define IN 1		/* inside a word */
 #define OUT 0		/* outside a word */
+#define CHARS_AMOUNT 128	/* according to the ASCII table */
 
 void outputOneWordPerLine()
 {
@@ -53,9 +54,28 @@ void print_words_length_histogram()
 	}
 }
 
+void count_chars_frequencies()
+{
+	int charsFrequencies[CHARS_AMOUNT];
+	for (int i = 0; i < CHARS_AMOUNT; i++)
+		charsFrequencies[i] = 0;
+	
+	int c;
+	while ((c = getchar()) != EOF)
+		charsFrequencies[c]++;
+	
+	for (int i = 0; i < CHARS_AMOUNT; i++)
+	{
+		printf("%c (char) : ", (char)i);
+		for (int j = 0; j < charsFrequencies[i]; j++)
+			putchar('x');
+		putchar('\n');
+	}
+}
+
 int main()
 {
-	print_words_length_histogram();
+	count_chars_frequencies();
 	return 0;
 }
 
