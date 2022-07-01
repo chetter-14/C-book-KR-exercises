@@ -1,13 +1,29 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-void charCount()
+#define IN 1		/* inside a word */
+#define OUT 0		/* outside a word */
+
+void countLinesCharsWords()
 {
-	double nc;
+	int c, nl, nw, nc, state;
 	
-	for (nc = 0; getchar() != EOF; nc++)
-		;
-	printf("%.0f\n", nc);
+	state = OUT;
+	nl = nw = nc = 0;
+	while ((c = getchar()) != EOF)
+	{
+		nc++;
+		if (c == '\n')
+			nl++;
+		if (c == ' ' || c == '\n' || c == '\t')
+			state = OUT;
+		else if (state == OUT)
+		{
+			state = IN;
+			nw++;
+		}
+	}
+	printf("Lines - %d, chars - %d, words - %d", nl, nc, nw);
 }
 
 void countBlanksTabsNewlines()
@@ -62,9 +78,30 @@ void replaceMultBlanksBySingle()
 	}
 }
 
+void outputOneWordPerLine()
+{
+	int c, state;
+	
+	state = OUT;
+	while ((c = getchar()) != EOF)
+	{
+		if (c == ' ' || c == '\t')
+		{
+			if (state == IN)
+				putchar('\n');
+			state = OUT;
+		}
+		else 
+		{
+			state = IN;
+			putchar(c);
+		}
+	}
+}
+
 int main()
 {
-	replaceMultBlanksBySingle();
+	outputOneWordPerLine();
 	return 0;
 }
 
