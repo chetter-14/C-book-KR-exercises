@@ -39,11 +39,11 @@ void reverse(char s[])
 		;
 	
 	char temp;
-	for (int lower = 0, upper = (len-1); lower < upper; lower++, upper--)
+	for (int i = 0; i < len / 2; i++)
 	{
-		temp = s[lower];
-		s[lower] = s[upper];
-		s[upper] = temp;
+		temp = s[i];
+		s[i] = s[len - 1 - i];
+		s[len - 1 - i] = temp;
 	}
 }
 
