@@ -1,6 +1,7 @@
 #include <stdio.h>
+#include <string.h>
 #define MAXLINE 1000
-#define LOWER_LEN_BOUND 80
+#define LINE_WIDTH 30
 
 int get_line(char line[], int maxline);
 void copy(char to[], char from[]);
@@ -14,10 +15,13 @@ int main()
 	
 	while ((len = get_line(line, MAXLINE)) > 0)
 	{
-		reverse(line);
-		printf("%s\n", line);
+		int tempLen;
+		for (tempLen = len; tempLen > LINE_WIDTH; tempLen -= LINE_WIDTH)
+		{
+			printf("%.*s\n", LINE_WIDTH, line + len - tempLen);	
+		}
+		printf("%.*s\n", tempLen, line + len - tempLen);
 	}
-		
 	return 0;
 }
 
